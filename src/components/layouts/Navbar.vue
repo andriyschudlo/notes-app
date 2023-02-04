@@ -4,10 +4,10 @@
       <div class="navbar-brand">
         <div class="navbar-item is-size-3 is-family-monospace"> Notes App </div>
         <small
-          v-if="$route.path !== '/auth'"
+          v-if="storeAuth.usrIn"
           class="p-5"
         >
-        signedin @{{ storeAuth.usr.email }}</small>
+        @{{ storeAuth.usr.email }}</small>
         <small
           v-else
           class="p-5"
@@ -42,12 +42,12 @@
             Stats</RouterLink
           >
           <RouterLink
-            v-if="$route.path !== '/auth'"
+            v-if="storeAuth.usrIn"
             class="navbar-item"
             active-class="is-active"
             to="/auth"
           ><a 
-            @click="storeAuth.logOut"
+            @click="storeAuth.logoutUser"
           >
           Logout</a>
             </RouterLink

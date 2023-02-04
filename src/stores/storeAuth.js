@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth'
 
 import { auth } from '@/js/firebase.js'
@@ -9,28 +9,31 @@ import { useNotesStore } from './storeNotes';
 export const useStoreAuth = defineStore('storeAuth', () => {
   const notesStore = useNotesStore()
   let usr = reactive({})
+  let usrIn = ref(false)
   const router = useRouter()
   const registerUser = (credentials) => {
     createUserWithEmailAndPassword(auth, credentials.email, credentials.password)
   .then((userCredential) => {
-    const user = userCredential.user;
+    const user = userCredential.user
   })
   .catch((error) => {
     console.log('error message: ', error.message)
   })
-  },
+  }
 
-  init = () => {
+  const init = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         usr.id = user.uid,
         usr.email = user.email
+        console.log('init-signIn', user)
         router.push('/')
-       console.log('Користувач: ', usr)
+        usrIn.value = true
       } else {
         usr = {}
         router.replace('/auth')
-        console.log('logout', usr)
+        console.log('init-signOut', user)
+        usrIn.value = false
       }
     })
   },
@@ -38,21 +41,27 @@ export const useStoreAuth = defineStore('storeAuth', () => {
       signInWithEmailAndPassword(auth, credentials.email, credentials.password)
     .then((userCredential) => {
       const user = userCredential.user
-      // console.log('user: ', user)
+      usrIn.value = true
+      console.log('userIn: ', usrIn.value)
+      // console.log('loginUser-signedIn')
+      // console.log(user)
+      // router.push('/')
     })
     .catch((error) => {
       // console.log('error.message', error.message)
     })
   },
-  logOut = () => {
+  logoutUser = () => {
     signOut(auth).then(() => {
-      // console.log('sign-out successful')
+      // console.log('logOut-signout')
+      usrIn.value = false
+      console.log('userIn: ', usrIn.value)
     }).catch((error) => {
       // console.log('error message: ', error.message)
     })
   }
 
   return {
-  registerUser, loginUser, logOut, init, usr
+  registerUser, loginUser, logoutUser, init, usr, usrIn
   }
 })
