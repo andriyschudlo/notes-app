@@ -46,12 +46,11 @@
 import Note from '../components/notes/Note.vue'
 import AddEditNote from '../components/notes/AddEditNote.vue'
 import {useWatchCharacters } from '@/use/useWatchCharacters.js'
-import { ref, onMounted} from 'vue'
+import { ref } from 'vue'
 import { useNotesStore } from '@/stores/notesStore'
 
 const notesStore = useNotesStore()
 
-onMounted(() => notesStore.getNotes())
 const noteText = ref('')
 const addEditNoteRef = ref(null)
 

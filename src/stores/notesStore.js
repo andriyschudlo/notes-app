@@ -1,15 +1,22 @@
 import { defineStore } from "pinia"
+import { useAuthStore } from "./authStore"
 import { ref, computed } from "vue"
 import { collection, onSnapshot, doc, addDoc, deleteDoc, updateDoc, query, orderBy } from "firebase/firestore"
 import { db } from '@/js/firebase.js'
-// import { useStoreAuth } from "./storeAuth"
+
 
 export const useNotesStore = defineStore("notesStore", () => {
-let notes = ref([])
-const loader = ref(false)
-const notesCollectionRef = collection(db,  'notes')
-const notesCollectionQuery = query(notesCollectionRef, orderBy('date', 'desc'))
+  const loader = ref(false)
+  let notesCollectionRef,
+  notesCollectionQuery
+  let notes = ref([])
 
+const init = () => {
+  const authStore = useAuthStore()
+  notesCollectionRef = collection(db,  'users', authStore.usr.id, 'notes')
+  notesCollectionQuery = query(notesCollectionRef, orderBy('date', 'desc'))
+  getNotes()
+}
 const getNotes = async() => {
 //   const querySnapshot = await getDocs(collection(db, "notes"))
 // querySnapshot.forEach((doc) => {
@@ -74,6 +81,6 @@ const totalCharactersCount = computed(() => {
   return count
 })
 
-return { notes, addNote, deleteNote, 
+return { notes, init, addNote, deleteNote, 
   getNoteContent, updateNote, totalNotesCount, totalCharactersCount, getNotes, loader }
 })

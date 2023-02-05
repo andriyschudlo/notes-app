@@ -6,10 +6,11 @@ import { useRouter } from 'vue-router'
 import { useNotesStore } from './notesStore';
 
 export const useAuthStore = defineStore('authStore', () => {
-  const notesStore = useNotesStore()
+  
   let usr = reactive({})
   let isUsrSignedin = ref(false)
   const router = useRouter()
+
   const registerUser = (credentials) => {
     createUserWithEmailAndPassword(auth, credentials.email, credentials.password)
   .then((userCredential) => {
@@ -21,12 +22,14 @@ export const useAuthStore = defineStore('authStore', () => {
   }
 
   const init = () => {
+    const notesStore = useNotesStore()
     onAuthStateChanged(auth, (user) => {
       if (user) {
         usr.id = user.uid,
         usr.email = user.email
         console.log('init-signIn', user)
         router.push('/')
+        notesStore.init()
         isUsrSignedin.value = true
       } else {
         usr = {}
