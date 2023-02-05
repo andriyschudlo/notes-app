@@ -1,11 +1,10 @@
 import { createRouter, createWebHashHistory} from 'vue-router'
+import { useAuthStore } from '../stores/authStore'
 import ViewNotes from '@/views/ViewNotes.vue'
 import ViewEditNote from '@/views/ViewEditNote.vue'
 import ViewStats from '@/views/ViewStats.vue'
 import ViewAuth from '@/views/ViewAuth.vue'
-export const router = createRouter({
-  history: createWebHashHistory(),
-  routes: [
+const routes = [
     {
       path: '/',
       name: 'notes',
@@ -28,4 +27,18 @@ export const router = createRouter({
 
     },
   ]
+  const router = createRouter({
+    history: createWebHashHistory(),
+    routes
+  })
+
+router.beforeEach(async(to, from) => {
+  const authStore = useAuthStore()
+  // console.log('TO: ', to);
+  if(!authStore.isUsrSignedin && to.name !== 'auth') {
+  return { name: 'auth'} 
+}
+  if(authStore.isUsrSignedin && to.name === 'auth')
+  return false
 })
+export default router 

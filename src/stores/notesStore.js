@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
 import { useAuthStore } from "./authStore"
-import { ref, computed, toRef } from "vue"
+import { ref, computed } from "vue"
 import { collection, onSnapshot, doc, addDoc, deleteDoc, updateDoc, query, orderBy } from "firebase/firestore"
 import { db } from '@/js/firebase.js'
 
@@ -12,7 +12,10 @@ export const useNotesStore = defineStore("notesStore", () => {
   notesCollectionQuery
   let notes = ref([])
   let getNotesSnapshot = ref(null)
-  const clearNotes = () => notes.value = {}
+  const clearNotes = () => {
+    notes.value = {}
+    if(getNotesSnapshot.value) getNotesSnapshot() // unsubscribe from any listeners
+  }
 
   const init = () => {
     
@@ -30,7 +33,7 @@ const getNotes = async() => {
 //   }
 //   notes.value.push(note)
 // })
-if(getNotesSnapshot.value) getNotesSnapshot()
+
 loader.value = true
   getNotesSnapshot = onSnapshot(notesCollectionQuery, (querySnapshot) => {
     let updNotes = []
