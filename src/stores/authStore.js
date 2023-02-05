@@ -6,8 +6,9 @@ import { useRouter } from 'vue-router'
 import { useNotesStore } from './notesStore';
 
 export const useAuthStore = defineStore('authStore', () => {
+  const notesStore = useNotesStore()
   
-  let usr = reactive({})
+  let usr = ref({})
   let isUsrSignedin = ref(false)
   const router = useRouter()
 
@@ -22,20 +23,22 @@ export const useAuthStore = defineStore('authStore', () => {
   }
 
   const init = () => {
-    const notesStore = useNotesStore()
+    
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        usr.id = user.uid,
-        usr.email = user.email
+        usr.value.id = user.uid,
+        usr.value.email = user.email
         console.log('init-signIn', user)
-        router.push('/')
         notesStore.init()
+        console.log('MY user :', usr.value)
+        router.push('/')
         isUsrSignedin.value = true
       } else {
-        usr = {}
+        usr.value = {}
         router.replace('/auth')
         console.log('init-signOut', user)
         isUsrSignedin.value = false
+        notesStore.clearNotes()
       }
     })
   },
@@ -55,11 +58,11 @@ export const useAuthStore = defineStore('authStore', () => {
   },
   logoutUser = () => {
     signOut(auth).then(() => {
-      // console.log('logOut-signout')
+      console.log('logOut-signeout')
       isUsrSignedin.value = false
       console.log('userIn: ', isUsrSignedin.value)
     }).catch((error) => {
-      // console.log('error message: ', error.message)
+      console.log('error message: ', error.message)
     })
   }
 

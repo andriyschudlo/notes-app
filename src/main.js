@@ -5,15 +5,15 @@ import App from './App.vue'
 
 import 'bulma/css/bulma.min.css'
 
-// const pinia = createPinia()
+const pinia = createPinia()
 
-// pinia.use(({ store }) => {
-//     store.router = markRaw(router)
-//   })
+pinia.use(({ store }) => {
+    store.router = markRaw(router)
+  })
 
 createApp(App)
-    .use(createPinia())
-    // .use(pinia)
+    // .use(createPinia())
+    .use(pinia)
     .use(router)
     .mount('#app')
  

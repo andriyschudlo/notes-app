@@ -1,22 +1,25 @@
 import { defineStore } from "pinia"
 import { useAuthStore } from "./authStore"
-import { ref, computed } from "vue"
+import { ref, computed, toRef } from "vue"
 import { collection, onSnapshot, doc, addDoc, deleteDoc, updateDoc, query, orderBy } from "firebase/firestore"
 import { db } from '@/js/firebase.js'
 
 
 export const useNotesStore = defineStore("notesStore", () => {
+  const authStore = useAuthStore()
   const loader = ref(false)
   let notesCollectionRef,
   notesCollectionQuery
   let notes = ref([])
+  let getNotesSnapshot = ref(null)
+  const clearNotes = () => notes.value = {}
 
-const init = () => {
-  const authStore = useAuthStore()
-  notesCollectionRef = collection(db,  'users', authStore.usr.id, 'notes')
-  notesCollectionQuery = query(notesCollectionRef, orderBy('date', 'desc'))
-  getNotes()
-}
+  const init = () => {
+    
+    notesCollectionRef = collection(db, 'users', authStore.usr.id, 'notes')
+    notesCollectionQuery = query(notesCollectionRef, orderBy('date', 'desc'))
+    getNotes()
+  }
 const getNotes = async() => {
 //   const querySnapshot = await getDocs(collection(db, "notes"))
 // querySnapshot.forEach((doc) => {
@@ -27,8 +30,9 @@ const getNotes = async() => {
 //   }
 //   notes.value.push(note)
 // })
-  loader.value = true
-  onSnapshot(notesCollectionQuery, (querySnapshot) => {
+if(getNotesSnapshot.value) getNotesSnapshot()
+loader.value = true
+  getNotesSnapshot = onSnapshot(notesCollectionQuery, (querySnapshot) => {
     let updNotes = []
     querySnapshot.forEach((doc) => {
       let note = {
@@ -77,10 +81,11 @@ const totalNotesCount = computed(() => notes.value.length)
 
 const totalCharactersCount = computed(() => {
   let count = 0
+  if(notes.value.length)
   notes.value.forEach(i => count += i.content.length)
   return count
 })
 
-return { notes, init, addNote, deleteNote, 
+return { notes, clearNotes, init, addNote, deleteNote, 
   getNoteContent, updateNote, totalNotesCount, totalCharactersCount, getNotes, loader }
 })
