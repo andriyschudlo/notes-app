@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { reactive, ref } from 'vue';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth'
-
 import { auth } from '@/js/firebase.js'
 import { useRouter } from 'vue-router'
 import { useNotesStore } from './notesStore';
