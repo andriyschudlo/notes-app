@@ -1,29 +1,29 @@
 <template>
-  <div class="modal is-active px-5">
-  <div class="modal-background "></div>
-  <div class="modal-card" ref="modalRef">
-    <header class="modal-card-head">
-      <p class="modal-card-title">Delete Note?</p>
+  <div class='modal is-active px-5'>
+  <div class='modal-background '></div>
+  <div class='modal-card' ref='modalRef'>
+    <header class='modal-card-head'>
+      <p class='modal-card-title'>Delete Note?</p>
       <button
-        class="delete"
-        aria-label="close"
-        @click="closeModal"
+        class='delete'
+        aria-label='close'
+        @click='closeModal'
       >
       </button>
     </header>
-    <section class="modal-card-body">
+    <section class='modal-card-body'>
       <!-- Content ... -->
-     <div class="is-size-5">Are you shure you want to delete this note?</div> 
+     <div class='is-size-5'>Are you shure you want to delete this note?</div> 
     </section>
-    <footer class="modal-card-foot is-justify-content-flex-end">
+    <footer class='modal-card-foot is-justify-content-flex-end'>
       <button
-        class="button"
-        @click="closeModal"
+        class='button'
+        @click='closeModal'
       >
       Cancel</button>
       <button
-        class="button is-danger"
-        @click="deleteNote"
+        class='button is-danger'
+        @click='deleteNote'
       >
       Delete</button>
     </footer>
@@ -33,8 +33,8 @@
 
 <script setup>
 import {ref, onMounted, onUnmounted} from 'vue'
-import { useNotesStore } from '@/stores/storeNotes.js'
-import { onClickOutside } from '@vueuse/core';
+import { useNotesStore } from '@/stores/notesStore'
+import { onClickOutside } from '@vueuse/core'
 const notesStore = useNotesStore()
 const props = defineProps({
   modelValue: {

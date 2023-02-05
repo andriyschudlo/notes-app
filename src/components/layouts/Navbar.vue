@@ -4,10 +4,10 @@
       <div class="navbar-brand">
         <div class="navbar-item is-size-3 is-family-monospace"> Notes App </div>
         <small
-          v-if="storeAuth.usrIn"
+          v-if="authStore.isUsrSignedin"
           class="p-5"
         >
-        @{{ storeAuth.usr.email }}</small>
+        @{{ authStore.usr.email }}</small>
         <small
           v-else
           class="p-5"
@@ -42,12 +42,12 @@
             Stats</RouterLink
           >
           <RouterLink
-            v-if="storeAuth.usrIn"
+            v-if="authStore.isUsrSignedin"
             class="navbar-item"
             active-class="is-active"
             to="/auth"
           ><a 
-            @click="storeAuth.logoutUser"
+            @click="authStore.logoutUser"
           >
           Logout</a>
             </RouterLink
@@ -60,10 +60,10 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useStoreAuth } from '@/stores/storeAuth'
+import { useAuthStore } from '@/stores/authStore'
 import { onClickOutside } from '@vueuse/core'
 
-const storeAuth = useStoreAuth()
+const authStore = useAuthStore()
 
 const showBurger = ref(false),
 menuRef = ref(null),

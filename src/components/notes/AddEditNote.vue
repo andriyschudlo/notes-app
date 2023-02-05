@@ -1,34 +1,34 @@
 <template>
   <div :class="['card', 'p-4', ' mb-5', `has-background-${bgColor}`]">
     <label
-      v-if="label"
-      :class="labelClass"
+      v-if='label'
+      :class='labelClass'
     >
     {{ label }}
       </label>
-      <div class="field">
-        <div class="control">
+      <div class='field'>
+        <div class='control'>
           <textarea
-            :value="modelValue"
+            :value='modelValue'
             @input="$emit('update:modelValue', $event.target.value)"
-            class="textarea"
-            :placeholder="placeholder"
-            ref="textareaRef"
+            class='textarea'
+            :placeholder='placeholder'
+            ref='textareaRef'
             v-autofocus
           />
         </div>
       </div>
 
-      <div class="field is-grouped is-grouped-right">
-        <div class="control">
-          <slot name="buttons" />
+      <div class='field is-grouped is-grouped-right'>
+        <div class='control'>
+          <slot name='buttons' />
         </div>
       </div>
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 import { vAutofocus } from '@/directives/vAutofocus.js'
 const props = defineProps({
   modelValue: {
@@ -58,7 +58,7 @@ const props = defineProps({
 
 const emits = defineEmits(['update:modelValue'])
 
-const textareaRef = ref(null);
+const textareaRef = ref(null)
 const focusTexarea = () => textareaRef.value.focus()
 defineExpose({
   focusTexarea

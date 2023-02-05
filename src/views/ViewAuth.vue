@@ -46,20 +46,20 @@
 </template>
 
 <script setup>
-import { ref, computed, reactive } from 'vue';
-import { useStoreAuth } from '../stores/storeAuth'
+import { ref, computed, reactive } from 'vue'
+import { useAuthStore } from '@/stores/authStore'
 
-const storeAuth = useStoreAuth()
-const register = ref(false);
-const authTitle = computed(() => (register.value ? 'Register' : 'Login'));
+const authStore = useAuthStore()
+const register = ref(false)
+const authTitle = computed(() => (register.value ? 'Register' : 'Login'))
 const onSubmit = () => {
   if (!credentials.email || !credentials.password)
     alert('To Login you must provide your credentials!')
   else {
     if (register.value) {
-      storeAuth.registerUser(credentials)
+      authStore.registerUser(credentials)
     } else {
-      storeAuth.loginUser(credentials)
+      authStore.loginUser(credentials)
     }
   }
   // credentials.email = ''

@@ -4,12 +4,12 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, on
 
 import { auth } from '@/js/firebase.js'
 import { useRouter } from 'vue-router'
-import { useNotesStore } from './storeNotes';
+import { useNotesStore } from './notesStore';
 
-export const useStoreAuth = defineStore('storeAuth', () => {
+export const useAuthStore = defineStore('authStore', () => {
   const notesStore = useNotesStore()
   let usr = reactive({})
-  let usrIn = ref(false)
+  let isUsrSignedin = ref(false)
   const router = useRouter()
   const registerUser = (credentials) => {
     createUserWithEmailAndPassword(auth, credentials.email, credentials.password)
@@ -28,12 +28,12 @@ export const useStoreAuth = defineStore('storeAuth', () => {
         usr.email = user.email
         console.log('init-signIn', user)
         router.push('/')
-        usrIn.value = true
+        isUsrSignedin.value = true
       } else {
         usr = {}
         router.replace('/auth')
         console.log('init-signOut', user)
-        usrIn.value = false
+        isUsrSignedin.value = false
       }
     })
   },
@@ -41,8 +41,8 @@ export const useStoreAuth = defineStore('storeAuth', () => {
       signInWithEmailAndPassword(auth, credentials.email, credentials.password)
     .then((userCredential) => {
       const user = userCredential.user
-      usrIn.value = true
-      console.log('userIn: ', usrIn.value)
+      isUsrSignedin.value = true
+      console.log('userIn: ', isUsrSignedin.value)
       // console.log('loginUser-signedIn')
       // console.log(user)
       // router.push('/')
@@ -54,14 +54,14 @@ export const useStoreAuth = defineStore('storeAuth', () => {
   logoutUser = () => {
     signOut(auth).then(() => {
       // console.log('logOut-signout')
-      usrIn.value = false
-      console.log('userIn: ', usrIn.value)
+      isUsrSignedin.value = false
+      console.log('userIn: ', isUsrSignedin.value)
     }).catch((error) => {
       // console.log('error message: ', error.message)
     })
   }
 
   return {
-  registerUser, loginUser, logoutUser, init, usr, usrIn
+  registerUser, loginUser, logoutUser, init, usr, isUsrSignedin
   }
 })

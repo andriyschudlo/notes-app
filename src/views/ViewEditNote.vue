@@ -1,23 +1,23 @@
 <template>
-  <div class="edit-note">
+  <div class='edit-note'>
     <AddEditNote
-    placeholder="edit text"
-    v-model="noteContent"
-    bg-color="warning"
-    label="Edit note"
-    label-class="title is-5 has-text-warning-dark"
+    placeholder='edit text'
+    v-model='noteContent'
+    bg-color='warning'
+    label='Edit note'
+    label-class='title is-5 has-text-warning-dark'
     >
       <template v-slot:buttons>
         <button
-          @click="back"
-          class="button has-text-warning has-background-warning-light"
+          @click='back'
+          class='button has-text-warning has-background-warning-light'
         >
           Cancel
         </button>
         <button
-          @click="handleSaveClicked"
-          class="button has-text-white has-background-warning-dark ml-2"
-          :disabled="!noteContent"
+          @click='handleSaveClicked'
+          class='button has-text-white has-background-warning-dark ml-2'
+          :disabled='!noteContent'
         >
           Save note
         </button>
@@ -27,10 +27,10 @@
 </template>
 
 <script setup>
-  import AddEditNote from '../components/notes/AddEditNote.vue';
-  import { useNotesStore } from '@/stores/storeNotes'
+  import AddEditNote from '../components/notes/AddEditNote.vue'
+  import { useNotesStore } from '@/stores/notesStore'
   import { useRoute, useRouter } from 'vue-router'
-  import { ref } from 'vue';
+  import { ref } from 'vue'
   
   const route = useRoute()
   const router = useRouter()

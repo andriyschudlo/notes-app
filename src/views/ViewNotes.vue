@@ -37,7 +37,7 @@
       v-if='!notesStore.notes.length'
       class='has-text-centered has-text-grey-light is-size-4 mt-6 pt-5 is-family-monospace'
     >
-    No notes here yet...
+   {{notesStore.loader ?'loading...' : 'No notes here yet...'}}
     </div>
   </div>
 </template>
@@ -47,11 +47,9 @@ import Note from '../components/notes/Note.vue'
 import AddEditNote from '../components/notes/AddEditNote.vue'
 import {useWatchCharacters } from '@/use/useWatchCharacters.js'
 import { ref, onMounted} from 'vue'
-import { useNotesStore } from '@/stores/storeNotes.js'
-// import { useStoreAuth } from '../stores/storeAuth'
+import { useNotesStore } from '@/stores/notesStore'
 
 const notesStore = useNotesStore()
-// const storeAuth = useStoreAuth()
 
 onMounted(() => notesStore.getNotes())
 const noteText = ref('')

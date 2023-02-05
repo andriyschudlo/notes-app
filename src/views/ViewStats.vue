@@ -1,6 +1,6 @@
 <template>
-  <div class="stats">
-    <table class="table is-fullwidth">
+  <div class='stats'>
+    <table class='table is-fullwidth'>
       <thead>
         <tr>
           <th>Stats</th>
@@ -18,28 +18,28 @@
         </tr>
       </tbody>
     </table>
-    <div class="control">
-    <label for="inp">Tell us about your expressions (Max {{ maxTextLength }} characters)</label>
+    <div class='control'>
+    <label for='inp'>Tell us about your expressions (Max {{ maxTextLength }} characters)</label>
       <input
-        class="input"
-        name="inp"
-        placeholder="Do you like Notes App?"
+        class='input'
+        name='inp'
+        placeholder='Do you like Notes App?'
         v-autofocus
-        v-model="reviewText"
-        type="text"
+        v-model='reviewText'
+        type='text'
       />
     </div>
   </div>
 </template>
 
 <script setup>
-import { useNotesStore } from "@/stores/storeNotes.js";
+import { useNotesStore } from '@/stores/notesStore'
 import { ref } from 'vue'
-import { vAutofocus } from "../directives/vAutofocus";
+import { vAutofocus } from '../directives/vAutofocus'
 import {useWatchCharacters } from '@/use/useWatchCharacters.js'
 
 const reviewText = ref('')
-const notesStore = useNotesStore();
+const notesStore = useNotesStore()
 const maxTextLength = 30
 useWatchCharacters(reviewText, maxTextLength)
 </script>
