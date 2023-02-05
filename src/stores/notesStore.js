@@ -47,6 +47,9 @@ loader.value = true
   })
         notes.value = updNotes
         loader.value = false
+},
+error => {
+  console.log('Error.message: ', error.message)
 })
 }
 

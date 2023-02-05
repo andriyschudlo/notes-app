@@ -7,10 +7,10 @@
           v-if="authStore.isUsrSignedin"
           class="p-5"
         >
-        @{{ authStore.usr.email }}</small>
+        <span class="has-text-success-dark">@</span>&nbsp;{{ authStore.usr.email }}</small>
         <small
           v-else
-          class="p-5"
+          class="p-5 has-text-success-dark"
         >
         signedOut</small>
         <a

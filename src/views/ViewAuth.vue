@@ -25,8 +25,13 @@
             <input v-model='credentials.password' class='input' type='password' />
           </div>
         </div>
-
+        <small
+         v-show='authStore.errorLogin'
+          class="has-text-danger"
+        >
+        Email or Password error</small>
         <div class='field is-grouped is-flex is-justify-content-space-between'>
+          
         <div class='control'>
           <a
           v-show='!register'

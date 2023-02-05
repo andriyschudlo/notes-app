@@ -9,6 +9,7 @@ export const useAuthStore = defineStore('authStore', () => {
   const notesStore = useNotesStore()
   
   let usr = ref({})
+  const errorLogin = ref(false)
   let isUsrSignedin = ref(false)
   const router = useRouter()
 
@@ -53,7 +54,12 @@ export const useAuthStore = defineStore('authStore', () => {
       // router.push('/')
     })
     .catch((error) => {
-      // console.log('error.message', error.message)
+      errorLogin.value = true
+      setTimeout(() => {
+        errorLogin.value = false
+      }, 4000);
+      console.log('error.message', error.message)
+
     })
   },
   logoutUser = () => {
@@ -67,6 +73,6 @@ export const useAuthStore = defineStore('authStore', () => {
   }
 
   return {
-  registerUser, loginUser, logoutUser, init, usr, isUsrSignedin
+  registerUser, loginUser, errorLogin, logoutUser, init, usr, isUsrSignedin
   }
 })
