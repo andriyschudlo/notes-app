@@ -1,4 +1,6 @@
 # notes-app
+Study project
+Vue 3, Vite, Pinia, Composition API, Bulma 
 
 This template should help get you started developing with Vue 3 in Vite.
 
