@@ -36,9 +36,9 @@
           <a
           v-show='!register'
           @click.prevent='register=true'
-            class='is-size-6'
+            class='is-size-7'
           >
-          Haven't account yet? Register!</a>
+          Don't have account? Register!</a>
         </div>
           <div class='control'>
             <button class='button is-primary'>{{ authTitle }}</button>

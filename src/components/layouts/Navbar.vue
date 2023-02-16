@@ -2,10 +2,10 @@
   <nav class="navbar is-success" role="navigation" aria-label="main navigation">
     <div class="container is-max-desktop">
       <div class="navbar-brand">
-        <div class="navbar-item is-size-3 is-family-monospace"> Notes App </div>
+        <div class="navbar-item is-size-5 is-family-monospace"> Notes App </div>
         <small
           v-if="authStore.isUsrSignedin"
-          class="p-5"
+          class="py-4"
         >
         <span class="has-text-success-dark">@</span>&nbsp;{{ authStore.usr.email }}</small>
         <small
