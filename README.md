@@ -1,7 +1,7 @@
 # notes-app
 Study project. Hosted on 
 https://notes-app-b2669.web.app/#/auth
-Vue 3, Vite, Pinia, Composition API, Bulma 
+Vue 3, Vite, Pinia, Composition API, Bulma, Firebase
 
 This template should help get you started developing with Vue 3 in Vite.
 
